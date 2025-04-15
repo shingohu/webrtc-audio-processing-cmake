@@ -35,6 +35,7 @@ set(COMMON_AUDIO_SRC
         "ring_buffer.c"
         "ring_buffer.h"
         "signal_processing/auto_corr_to_refl_coef.c"
+        "signal_processing/complex_bit_reverse.c"
         "signal_processing/auto_correlation.c"
         "signal_processing/complex_fft_tables.h"
         "signal_processing/copy_set_operations.c"
@@ -102,12 +103,12 @@ if (have_neon)
             "signal_processing/downsample_fast_neon.c"
             "signal_processing/min_max_operations_neon.c"
             "third_party/ooura/fft_size_128/ooura_fft_neon.cc"
-            "third_party/ooura/fft_size_128/ooura_fft_tables_neon_sse2.h"
             )
 endif ()
 
 if (have_arm)
     LIST(APPEND COMMON_AUDIO_SRC
+            "third_party/spl_sqrt_floor/spl_sqrt_floor_arm.S"
             "signal_processing/complex_bit_reverse_arm.S"
             )
     if (have_armv7 OR have_arm64)
@@ -134,6 +135,8 @@ if (CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(x86_64)|(i686)")
             "third_party/ooura/fft_size_128/ooura_fft_sse2.cc"
             "fir_filter_sse.cc"
             "fir_filter_sse.h"
+            "fir_filter_avx2.cc"
+            "fir_filter_avx2.h"
             "resampler/sinc_resampler_sse.cc"
             "resampler/sinc_resampler_avx2.cc"
             )

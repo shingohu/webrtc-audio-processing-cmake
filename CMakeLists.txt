@@ -4,7 +4,6 @@ project(webrtc-audio-processing)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 14)
-
 if (CMAKE_SYSTEM_NAME MATCHES "Darwin")
     add_definitions(-DWEBRTC_MAC)
     set(have_posix TRUE)
@@ -23,7 +22,7 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 if(have_posix)
-    message(STATUS "have_posix ${have_posix}")
+    message(WARNING "have_posix ${have_posix}")
     add_definitions(-DWEBRTC_POSIX)
 endif()
 
@@ -51,10 +50,10 @@ check_cxx_source_compiles("
 int main(){return 0;}
 " have_arm64)
 
-message(STATUS "have_arm: ${have_arm}")
-message(STATUS "have_armv7: ${have_armv7}")
-message(STATUS "have_arm64: ${have_arm64}")
-
+message(WARNING "have_arm: ${have_arm}")
+message(WARNING "have_armv7: ${have_armv7}")
+message(WARNING "have_arm64: ${have_arm64}")
+message(WARNING "${CMAKE_SYSTEM_PROCESSOR}")
 if (have_arm)
     add_definitions(-DWEBRTC_ARCH_ARM)
 endif ()
@@ -65,7 +64,6 @@ if(have_arm64)
     add_definitions(-DWEBRTC_ARCH_ARM64 -DWEBRTC_HAS_NEON)
     set(have_neon TRUE)
 endif()
-message(STATUS "${CMAKE_SYSTEM_PROCESSOR}")
 if (CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(x86_64)|(i686)")
     add_definitions(-DWEBRTC_ENABLE_AVX2)
     set(have_avx2 TRUE)
